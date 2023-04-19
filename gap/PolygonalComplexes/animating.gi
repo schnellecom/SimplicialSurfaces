@@ -819,6 +819,27 @@ BindGlobal( "__SIMPLICIAL_InitializePrintRecordDrawSurfaceToJavascript",
     end
 );
 
+# set a material for the surface, currently only supports "normal" as input
+InstallMethod( SetSurfaceMaterial,
+    "for a simplicial surface, a string and a record",
+    [IsTriangularComplex, IsString, IsRecord],
+    function(surface, material, printRecord)
+        printRecord.material := material;
+        return printRecord;
+    end
+);
+
+InstallMethod( GetSurfaceMaterial,
+    "for a simplicial surface and a record",
+    [IsTriangularComplex, IsRecord],
+    function(surface, printRecord)
+        if not IsBound(printRecord.material) then
+            return "";
+        fi;
+        return printRecord.material;
+    end
+);
+
 # function to calculate the incenter of a triangle/face. Used for inner circles
 # we follow the math and variable names from here: https://math.stackexchange.com/questions/740111/incenter-of-triangle-in-3d
 BindGlobal( "__SIMPLICIAL_CalculateIncenter",
@@ -905,7 +926,7 @@ InstallMethod( DrawSurfaceToJavaScriptCalculate,
 		      parametersOfEdge, temp, vertex, edge ,face,vertices,edges,
               faceColors, addedFaceColors, uniqueFaceColors, colorPositions, color, coordinateString, edgeThickness,
 		      faces, coordinateStringA, coordinateStringB, coordinateStringC, edgeVertexA, edgeVertexB, edgeColors, uniqueEdgeColors,
-              incenter,inradius, normal, atemp, btemp;	
+              incenter,inradius, normal, atemp, btemp, material;	
     # make sure the defaults are set
     printRecord := __SIMPLICIAL_InitializePrintRecordDrawSurfaceToJavascript(surface, printRecord);
     
@@ -981,9 +1002,15 @@ InstallMethod( DrawSurfaceToJavaScriptCalculate,
         AppendTo(output, "] ); \n\n");
         AppendTo(output, "\t \t \tgeometry",i,".setAttribute( 'position', new THREE.BufferAttribute( vertices",i,", 3 ) );\n\n");
 
+        # set the material to normal if printrecord has attribute set.
+        material := "MeshPhongMaterial";
+        if GetSurfaceMaterial(surface, printRecord) = "normal" then
+            material := "MeshNormalMaterial";
+        fi;
+
         # generate a material with the corresponding color
         AppendTo(output, """
-            const material""",i,""" = new THREE.MeshPhongMaterial({
+            const material""",i,""" = new THREE.""",material,"""({
                 color: """,GetFaceColour(surface, face, printRecord),""",          
                 flatShading: true,       
             });
