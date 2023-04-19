@@ -601,6 +601,35 @@ DeclareOperation( "DeactivateNormalOfInnerCircles", [IsTriangularComplex, IsReco
 DeclareOperation( "DeactivateNormalOfInnerCircle", [IsTriangularComplex, IsPosInt, IsRecord] );
 #! @EndGroup
 
+
+#! @Section Materials
+#! @SectionLabel Materials
+#! Currently there is the possibility to render the surface with not the normal material but a so called normalsMaterial. This material computes the color of any face live 
+#! with regards to it's normal vector towards the camera. That way we get a different color if two faces are not in the same orientation.
+#! To activate this mode, set the following to normal, if it is anything else, the package will use the default material.
+#! @Returns a print record
+#! @Arguments surface, string, printRecord
+DeclareOperation("SetSurfaceMaterial", [IsTriangularComplex, IsString, IsRecord]);
+#! @Returns string
+#! @Arguments surface, printRecord
+DeclareOperation("GetSurfaceMaterial", [IsTriangularComplex, IsRecord]);
+#! @EndGroup
+#! Consider the following example:
+#! @BeginLog
+#! gap> oct := Octahedron();;
+#! gap> verticesPositions := [
+#! > [ 0, 0, Sqrt(2.) ],
+#! > [ 1, 1, 0 ],
+#! > [ 1, -1, 0 ],
+#! > [ -1, -1, 0 ],
+#! > [ -1, 1, 0 ],
+#! > [ 0, 0, -Sqrt(2.) ] ];;
+#! gap> printRecord := SetVertexCoordinates3D(oct, verticesPositions, rec());;
+#! gap> printRecord := SetSurfaceMaterial(oct, "normal", printRecord);
+#! gap> DrawSurfaceToJavaScript(oct, "doc/Octahedron_NormalMaterial.html", printRecord);;
+#! @EndLog
+
+
 #! @Section Additional Parameters
 #! @SectionLabel AdditionalParameters
 #! <E> This is currently not working, check https://github.com/schnellecom/SimplicialSurfaces/issues/14 </E> 
