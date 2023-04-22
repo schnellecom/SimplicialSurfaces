@@ -626,10 +626,14 @@ InstallMethod( GetFaceColour,
 				if not IsBound(printRecord.faceColours) or (face <= 0) then
 					return default;
 				fi;
-				if not IsBound(printRecord.faceColours[face]) then
+				if not IsBound(printRecord.faceColours[face]) and not IsString(printRecord.faceColours) then
 					return default;
 				fi;
-				return printRecord.faceColours[face];
+				if IsString(printRecord.faceColours) then
+                    return printRecord.faceColours;
+                else
+    				return printRecord.faceColours[face];
+                fi;
     end
 );
 
@@ -1010,10 +1014,9 @@ InstallMethod( DrawSurfaceToJavaScriptCalculate,
 
         # generate a material with the corresponding color
         Print("color: ",color);
-        if color = "\"normal\"" then
+        if color = "normal" then
             AppendTo(output, """
-                const material""",i,""" = new THREE.MeshNormalMaterial({
-                    color: """,GetFaceColour(surface, face, printRecord),""",          
+                const material""",i,""" = new THREE.MeshNormalMaterial({       
                     flatShading: true,       
                 });
                 material""",i,""".transparent = true;
