@@ -41,7 +41,8 @@
 			//create groups to add everything to
             const meshRoot = new THREE.Group();
             const wireRoot = new THREE.Group();
-            const sphereRoot = new THREE.Group();
+            const vertexRoot = new THREE.Group();
+			const vertexlabelRoot = new THREE.Group();
 			const edgeRoot = new THREE.Group();
 			const ringRoot = new THREE.Group();
 			const normalsRoot = new THREE.Group();
@@ -54,6 +55,8 @@
                 this.transparency = 1.0;
                 this.edgeVisibility = false;
 				this.vertexVisibility = true;
+				this.vertexlabelVisibility = true;
+				this.vertexSize = 1;
 				this.planeX = 1.0;
                 this.planeXactive = true;
                 this.planeY = 1.0;

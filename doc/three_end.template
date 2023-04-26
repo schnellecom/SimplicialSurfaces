@@ -28,6 +28,8 @@
             controlFolder.add(guiParameters, "transparency", 0, 1);
             controlFolder.add(guiParameters, "edgeVisibility");
             controlFolder.add(guiParameters, "vertexVisibility");
+            controlFolder.add(guiParameters, "vertexlabelVisibility");
+            controlFolder.add(guiParameters, "vertexSize", 0.1, 3);
             controlFolder.open();
 
             const planeFolder = gui.addFolder("Intersection Planes");
@@ -41,7 +43,8 @@
             // add both roots to the scene
             scene.add( meshRoot );
             scene.add( wireRoot );
-            scene.add( sphereRoot );
+            scene.add( vertexRoot );
+            scene.add( vertexlabelRoot );
             scene.add( edgeRoot );
             scene.add( ringRoot );
             scene.add( normalsRoot );
@@ -57,9 +60,13 @@
                 wireRoot.rotation.y += guiParameters.speedY/100;
                 wireRoot.rotation.z += guiParameters.speedZ/100;
 
-                sphereRoot.rotation.x += guiParameters.speedX/100;
-                sphereRoot.rotation.y += guiParameters.speedY/100;
-                sphereRoot.rotation.z += guiParameters.speedZ/100;
+                vertexRoot.rotation.x += guiParameters.speedX/100;
+                vertexRoot.rotation.y += guiParameters.speedY/100;
+                vertexRoot.rotation.z += guiParameters.speedZ/100;
+
+                vertexlabelRoot.rotation.x += guiParameters.speedX/100;
+                vertexlabelRoot.rotation.y += guiParameters.speedY/100;
+                vertexlabelRoot.rotation.z += guiParameters.speedZ/100;
 
                 edgeRoot.rotation.x += guiParameters.speedX/100;
                 edgeRoot.rotation.y += guiParameters.speedY/100;
@@ -105,12 +112,16 @@
                     }
                 } );
 
-                sphereRoot.traverse( function( node ) {
+                vertexRoot.traverse( function( node ) {
                     if ( node instanceof THREE.Mesh ) {
                         node.material.visible = guiParameters.vertexVisibility;
+                        node.scale.setScalar(guiParameters.vertexSize);
                     }
+                } );
+
+                vertexlabelRoot.traverse( function( node ) {
                     if( node instanceof CSS2DObject) {
-                        node.visible = guiParameters.vertexVisibility;
+                        node.visible = guiParameters.vertexlabelVisibility;
                     }
                 } );
 
