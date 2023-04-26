@@ -30,6 +30,14 @@
             controlFolder.add(guiParameters, "vertexVisibility");
             controlFolder.open();
 
+            const planeFolder = gui.addFolder("Intersection Planes");
+            planeFolder.add(guiParameters, 'planeX', -1.5, 1.5);
+            planeFolder.add(guiParameters, 'planeXactive');
+            planeFolder.add(guiParameters, 'planeY', -1.5, 1.5);
+            planeFolder.add(guiParameters, 'planeYactive');
+            planeFolder.add(guiParameters, 'planeZ', -1.5, 1.5);
+            planeFolder.add(guiParameters, 'planeZactive');
+
             // add both roots to the scene
             scene.add( meshRoot );
             scene.add( wireRoot );
@@ -68,10 +76,26 @@
                 //update the light when the camera moves (with orbitcontrols)
                 light.position.set(camera.position.x, camera.position.y, camera.position.z);
 
+                planeX.constant = guiParameters.planeX;
+                planeY.constant = guiParameters.planeY;
+                planeZ.constant = guiParameters.planeZ;
+
+                localPlanes = [];
+                if(guiParameters.planeXactive){
+                    localPlanes.push(planeX);
+                }
+                if(guiParameters.planeYactive){
+                    localPlanes.push(planeY);
+                }
+                if(guiParameters.planeZactive){
+                    localPlanes.push(planeZ);
+                }
+
                 //update stuff that changes from the gui
                 meshRoot.traverse( function( node ) {
                     if ( node instanceof THREE.Mesh ) {
                         node.material.opacity = guiParameters.transparency;
+                        node.material.clippingPlanes = localPlanes;
                     }
                 } );
 
@@ -91,6 +115,8 @@
                 } );
 
                 controls.update();
+
+                renderer.localClippingEnabled = true;
 
                 renderer.render( scene, camera );
                 labelRenderer.render( scene, camera );
