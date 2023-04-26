@@ -54,7 +54,19 @@
                 this.transparency = 1.0;
                 this.edgeVisibility = false;
 				this.vertexVisibility = true;
+				this.planeX = 1.0;
+                this.planeXactive = true;
+                this.planeY = 1.0;
+                this.planeYactive = true;
+                this.planeZ = 1.0;
+                this.planeZactive = true;
             } ;
+
+			const planeX = new THREE.Plane( new THREE.Vector3( 1, 0, 0 ), guiParameters.planeX );
+            const planeY = new THREE.Plane( new THREE.Vector3( 0, 1, 0 ), guiParameters.planeY );
+            const planeZ = new THREE.Plane( new THREE.Vector3( 0, 0, 1 ), guiParameters.planeZ );
+
+            var localPlanes = [];
 
             //generate a sphere geometry for the vertices
             const sphereGeometry = new THREE.SphereGeometry( 0.02, 32, 16 );
