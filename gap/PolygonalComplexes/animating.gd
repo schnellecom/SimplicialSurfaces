@@ -405,6 +405,7 @@ DeclareOperation( "GetEdgeColour", [IsTriangularComplex, IsPosInt, IsRecord] );
 #! The default colour for all faces is 0x049EF4, a light blue hue.
 #! Colours are stored in the format 0xABCDEF where A,B,C,D,E,F are elements of the hexadecimal code.
 #! For more information look at the start of the section <Ref Subsect="Section_LabelColouring"/>.
+#! It is also possible to set the color to a so called normalsMaterial, more in <Ref Subsect="Section_NormalsMaterial"/>.
 #! @Returns a print record
 #! @Arguments surface, newColoursList, printRecord
 DeclareOperation( "SetFaceColours", [IsTriangularComplex, IsList, IsRecord] );
@@ -602,18 +603,11 @@ DeclareOperation( "DeactivateNormalOfInnerCircle", [IsTriangularComplex, IsPosIn
 #! @EndGroup
 
 
-#! @Section Materials
-#! @SectionLabel Materials
+#! @Section NormalsMaterial
+#! @SectionLabel NormalsMaterial
 #! Currently there is the possibility to render the surface with not the normal material but a so called normalsMaterial. This material computes the color of any face live 
 #! with regards to it's normal vector towards the camera. That way we get a different color if two faces are not in the same orientation.
-#! To activate this mode, set the following to normal, if it is anything else, the package will use the default material.
-#! @Returns a print record
-#! @Arguments surface, string, printRecord
-DeclareOperation("SetSurfaceMaterial", [IsTriangularComplex, IsString, IsRecord]);
-#! @Returns string
-#! @Arguments surface, printRecord
-DeclareOperation("GetSurfaceMaterial", [IsTriangularComplex, IsRecord]);
-#! @EndGroup
+#! 
 #! Consider the following example:
 #! @BeginLog
 #! gap> oct := Octahedron();;
@@ -625,7 +619,7 @@ DeclareOperation("GetSurfaceMaterial", [IsTriangularComplex, IsRecord]);
 #! > [ -1, 1, 0 ],
 #! > [ 0, 0, -Sqrt(2.) ] ];;
 #! gap> printRecord := SetVertexCoordinates3D(oct, verticesPositions, rec());;
-#! gap> printRecord := SetSurfaceMaterial(oct, "normal", printRecord);
+#! gap> printRecord := SetFaceColour(oct, "normal", printRecord);
 #! gap> DrawSurfaceToJavaScript(oct, "doc/Octahedron_NormalMaterial.html", printRecord);;
 #! @EndLog
 
