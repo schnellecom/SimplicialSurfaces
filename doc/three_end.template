@@ -33,12 +33,12 @@
             controlFolder.open();
 
             const planeFolder = gui.addFolder("Intersection Planes");
-            planeFolder.add(guiParameters, 'planeX', -1.5, 1.5);
             planeFolder.add(guiParameters, 'planeXactive');
-            planeFolder.add(guiParameters, 'planeY', -1.5, 1.5);
+            planeFolder.add(guiParameters, 'planeX', -1.5, 1.5);
             planeFolder.add(guiParameters, 'planeYactive');
-            planeFolder.add(guiParameters, 'planeZ', -1.5, 1.5);
+            planeFolder.add(guiParameters, 'planeY', -1.5, 1.5);
             planeFolder.add(guiParameters, 'planeZactive');
+            planeFolder.add(guiParameters, 'planeZ', -1.5, 1.5);
 
             // add both roots to the scene
             scene.add( meshRoot );
