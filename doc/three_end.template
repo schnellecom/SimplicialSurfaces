@@ -18,7 +18,6 @@
             var gui = new GUI();
 
             const animationFolder = gui.addFolder("Animations");
-
             animationFolder.add(guiParameters, 'speedX', 0, 5);
             animationFolder.add(guiParameters, 'speedY', 0, 5);
             animationFolder.add(guiParameters, 'speedZ', 0, 5);
@@ -30,6 +29,7 @@
             controlFolder.add(guiParameters, "vertexVisibility");
             controlFolder.add(guiParameters, "vertexlabelVisibility");
             controlFolder.add(guiParameters, "vertexSize", 0.1, 3);
+            controlFolder.add(guiParameters, "normalsMaterial");
             controlFolder.open();
 
             const planeFolder = gui.addFolder("Intersection Planes");
@@ -48,6 +48,7 @@
             scene.add( edgeRoot );
             scene.add( ringRoot );
             scene.add( normalsRoot );
+            scene.add( normalMeshRoot );
 
 
             function animate() {
@@ -103,6 +104,19 @@
                     if ( node instanceof THREE.Mesh ) {
                         node.material.opacity = guiParameters.transparency;
                         node.material.clippingPlanes = localPlanes;
+                        if(guiParameters.normalsMaterial){
+                            node.material.opacity = 0;
+                        }
+                    }
+                } );
+
+                normalMeshRoot.traverse( function( node ) {
+                    if ( node instanceof THREE.Mesh ) {
+                        node.material.opacity = guiParameters.transparency;
+                        node.material.clippingPlanes = localPlanes;
+                        if(!guiParameters.normalsMaterial){
+                            node.material.opacity = 0;
+                        }
                     }
                 } );
 

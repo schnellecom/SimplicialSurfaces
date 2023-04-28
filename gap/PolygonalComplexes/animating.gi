@@ -1009,26 +1009,21 @@ InstallMethod( DrawSurfaceToJavaScriptCalculate,
         AppendTo(output, "\t \t \tgeometry",i,".setAttribute( 'position', new THREE.BufferAttribute( vertices",i,", 3 ) );\n\n");
 
         # generate a material with the corresponding color
-
-
-        if color = "normal" then
-            AppendTo(output, """
-                const material""",i,""" = new THREE.MeshNormalMaterial({       
-                    flatShading: true,       
-                });
-                material""",i,""".transparent = true;
-                material""",i,""".side = THREE.DoubleSide;
-            """);
-        else
-            AppendTo(output, """
-                const material""",i,""" = new THREE.MeshPhongMaterial({
-                    color: """,GetFaceColour(surface, face, printRecord),""",          
-                    flatShading: true,       
-                });
-                material""",i,""".transparent = true;
-                material""",i,""".side = THREE.DoubleSide;
-            """);
-        fi;
+        AppendTo(output, """
+            const materialNormal""",i,""" = new THREE.MeshNormalMaterial({       
+                flatShading: true,       
+            });
+            materialNormal""",i,""".transparent = true;
+            materialNormal""",i,""".side = THREE.DoubleSide;
+        """);
+        AppendTo(output, """
+            const material""",i,""" = new THREE.MeshPhongMaterial({
+                color: """,GetFaceColour(surface, face, printRecord),""",          
+                flatShading: true,       
+            });
+            material""",i,""".transparent = true;
+            material""",i,""".side = THREE.DoubleSide;
+        """);
 
         # generate a mesh from the geometry and material above
         AppendTo(output, """
@@ -1037,6 +1032,13 @@ InstallMethod( DrawSurfaceToJavaScriptCalculate,
             mesh""",i,""".receiveShadow = true;                      
                                         
             meshRoot.add(mesh""",i,""");
+        """);
+        AppendTo(output, """
+            const meshNormal""",i,""" = new THREE.Mesh( geometry""",i,""", materialNormal""",i,""" );
+            mesh""",i,""".castShadow = true;                         
+            mesh""",i,""".receiveShadow = true;                      
+                                        
+            normalMeshRoot.add(meshNormal""",i,""");
         """);
     od;
 
