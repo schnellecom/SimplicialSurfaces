@@ -53,7 +53,7 @@
                 this.speedX = 0.0; 
                 this.speedY = 0.0; 
                 this.speedZ = 0.0;
-                this.transparency = 1.0;
+                this.transparency = 0.1;
                 this.edgeVisibility = false;
 				this.vertexVisibility = true;
 				this.vertexlabelVisibility = true;

@@ -1,5 +1,5 @@
 
-			camera.position.z = -5;
+			camera.position.z = -2;
             camera.lookAt(0,0,-1);
 
             scene.background = new THREE.Color( 'white' );
@@ -39,6 +39,7 @@
             planeFolder.add(guiParameters, 'planeY', -1.5, 1.5);
             planeFolder.add(guiParameters, 'planeZactive');
             planeFolder.add(guiParameters, 'planeZ', -1.5, 1.5);
+            planeFolder.open();
 
             // add both roots to the scene
             scene.add( meshRoot );
