@@ -57,6 +57,7 @@
                 this.edgeVisibility = false;
 				this.vertexVisibility = true;
 				this.vertexlabelVisibility = true;
+				this.circleVisibility = true;
 				this.vertexSize = 1;
 				this.planeX = 0.0;
                 this.planeXactive = false;

@@ -28,6 +28,7 @@
             controlFolder.add(guiParameters, "edgeVisibility");
             controlFolder.add(guiParameters, "vertexVisibility");
             controlFolder.add(guiParameters, "vertexlabelVisibility");
+            controlFolder.add(guiParameters, "circleVisibility");
             controlFolder.add(guiParameters, "vertexSize", 0.1, 3);
             controlFolder.add(guiParameters, "normalsMaterial");
             controlFolder.open();
@@ -137,6 +138,12 @@
                 vertexlabelRoot.traverse( function( node ) {
                     if( node instanceof CSS2DObject) {
                         node.visible = guiParameters.vertexlabelVisibility;
+                    }
+                } );
+
+                ringRoot.traverse( function( node ) {
+                    if ( node instanceof THREE.Mesh ) {
+                        node.material.visible = guiParameters.circleVisibility;
                     }
                 } );
 
